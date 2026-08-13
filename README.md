@@ -25,6 +25,7 @@ docker compose up --build
 - **Swagger UI**: [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/)
 - **OpenAPI Schema**: [http://localhost:8000/api/schema/](http://localhost:8000/api/schema/)
 - **API Base URL**: `http://localhost:8000/api/v1/`
+- **Postman & Bruno Collection**: Import `postman_collection.json` or open the `bruno/` directory in Bruno. Contains all endpoints with automated JWT token saving on login!
 
 ---
 
