@@ -158,10 +158,13 @@ CELERY_TASK_ALWAYS_EAGER = env.bool("CELERY_TASK_ALWAYS_EAGER", default=USE_SQLI
 CELERY_TASK_EAGER_PROPAGATES = True
 
 # Email Configuration
-EMAIL_BACKEND = (
-    "django.core.mail.backends.locmem.EmailBackend"
-    if USE_SQLITE
-    else "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = env(
+    "EMAIL_BACKEND",
+    default=(
+        "django.core.mail.backends.locmem.EmailBackend"
+        if USE_SQLITE
+        else "django.core.mail.backends.console.EmailBackend"
+    ),
 )
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")
