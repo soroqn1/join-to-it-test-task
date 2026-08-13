@@ -142,7 +142,7 @@ class RegistrationAPITests(APITestCase):
         self.client.force_authenticate(user=self.participant)
         self.client.post(self.register_url)
         response = self.client.post(self.register_url)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
         self.assertIn("already registered", response.data["detail"].lower())
 
     def test_cancel_registration_success(self):

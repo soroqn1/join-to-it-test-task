@@ -53,7 +53,7 @@ class EventRegisterView(APIView):
 
     @extend_schema(
         summary="Join an event",
-        responses={201: RegistrationSerializer, 400: dict},
+        responses={201: RegistrationSerializer, 409: dict},
     )
     def post(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
@@ -62,7 +62,7 @@ class EventRegisterView(APIView):
         if not created:
             return Response(
                 {"detail": "You are already registered for this event."},
-                status=status.HTTP_400_BAD_REQUEST,
+                status=status.HTTP_409_CONFLICT,
             )
 
         send_registration_email.delay(
