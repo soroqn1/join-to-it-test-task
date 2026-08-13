@@ -1,0 +1,21 @@
+meta {
+  name: List Events
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/events/?search=Django
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~search: Django
+  ~location: Kyiv
+  ~organizer: 1
+}
+
+auth:bearer {
+  token: {{token}}
+}

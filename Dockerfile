@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
+# Create non-root user for security
+RUN addgroup --system appgroup && adduser --system --group appuser
+
 WORKDIR /app
 
 # Copy dependency files
@@ -28,6 +31,11 @@ RUN poetry install --no-interaction --no-ansi
 
 # Copy project files
 COPY . /app/
+
+# Set ownership
+RUN chown -R appuser:appgroup /app
+
+USER appuser
 
 EXPOSE 8000
 

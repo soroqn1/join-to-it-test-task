@@ -1,0 +1,15 @@
+meta {
+  name: Join Event
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/events/1/register/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
