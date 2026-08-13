@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "join-to-it-test-task"
+version = "0.1.0"
+description = "REST API backend for event management"
+authors = ["soroqn"]
+readme = "docs/README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1"
+djangorestframework = "^3.15"
+djangorestframework-simplejwt = "^5.3"
+django-filter = "^24.3"
+celery = "^5.4"
+redis = "^5.1"
+psycopg = {extras = ["binary"], version = "^3.2"}
+drf-spectacular = "^0.28"
+django-environ = "^0.11.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3"
+pytest-django = "^4.9"
+ruff = "^0.9"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "C4"]
+ignore = []
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py", "*_test.py", "tests.py"]
