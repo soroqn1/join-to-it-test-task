@@ -31,7 +31,7 @@ fix:
 
 # Run pytest suite
 test:
-    poetry run pytest || true
+    USE_SQLITE=True poetry run pytest
 
 # Pre-commit pipeline (lint + test)
 pre-commit: ruff test

@@ -10,12 +10,12 @@ This document outlines the step-by-step implementation plan.
 - [x] Setup Docker & `docker-compose.yml` with PostgreSQL 16 and Redis 7.
 - [x] Setup `just pre-commit` pipeline.
 
-## ⚪ Phase 1: Custom User & Authentication
-- [ ] Create `users` app.
-- [ ] Implement custom User model (email-based).
-- [ ] Configure `simplejwt`.
-- [ ] Build `/auth/register/` and `/auth/login/` endpoints.
-- [ ] Tests for auth.
+## 🟢 Phase 1: Custom User & Authentication (Completed)
+- [x] Create `users` app.
+- [x] Implement custom User model (email-based).
+- [x] Configure `simplejwt`.
+- [x] Build `/auth/register/` and `/auth/login/` endpoints.
+- [x] Tests for auth.
 
 ## ⚪ Phase 2: Events Core
 - [ ] Create `events` app.
