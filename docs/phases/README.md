@@ -2,13 +2,13 @@
 
 This document outlines the step-by-step implementation plan.
 
-## 🔴 Phase 0: Project Initialization & Architecture (Current)
+## 🟢 Phase 0: Project Initialization & Architecture (Completed)
 - [x] Define docs structure and architecture.
-- [ ] Initialize Python environment (`uv` / `poetry`).
-- [ ] Install base dependencies (Django, DRF, Ruff, Task).
-- [ ] Setup initial Django project.
-- [ ] Setup Docker & `docker-compose.yml` with PostgreSQL and Redis.
-- [ ] Setup `task pre-commit` pipeline.
+- [x] Initialize Python environment (`poetry`).
+- [x] Install base dependencies (Django, DRF, Ruff, Just).
+- [x] Setup initial Django project (`config`).
+- [x] Setup Docker & `docker-compose.yml` with PostgreSQL 16 and Redis 7.
+- [x] Setup `just pre-commit` pipeline.
 
 ## ⚪ Phase 1: Custom User & Authentication
 - [ ] Create `users` app.
