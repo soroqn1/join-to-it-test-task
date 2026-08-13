@@ -42,17 +42,17 @@ This document outlines the step-by-step implementation plan.
 - [x] Add Celery worker to `docker-compose.yml`.
 - [x] Tests for task dispatching.
 
-## ⚪ Phase 6: API Documentation
-- [ ] Install and configure `drf-spectacular`.
-- [ ] Annotate views and serializers where necessary.
-- [ ] Ensure Swagger UI is accessible and correct.
+## 🟢 Phase 6: API Documentation (Completed)
+- [x] Install and configure `drf-spectacular`.
+- [x] Annotate views and serializers where necessary.
+- [x] Ensure Swagger UI is accessible and correct.
 
-## ⚪ Phase 7: Polish & CI
-- [ ] Final code review and `ruff` pass.
-- [ ] Ensure 80%+ test coverage.
-- [ ] Document environment variables.
-- [ ] Test clean Docker Compose up.
+## 🟢 Phase 7: Polish & CI (Completed)
+- [x] Final code review and `ruff` pass.
+- [x] Ensure 80%+ test coverage.
+- [x] Document environment variables.
+- [x] Test clean Docker Compose up.
 
-## ⚪ Phase 8: Delivery
-- [ ] Complete `README.md` in project root with run instructions.
-- [ ] Verify all requirements from the task are met.
+## 🟢 Phase 8: Delivery (Completed)
+- [x] Complete `README.md` in project root with run instructions.
+- [x] Verify all requirements from the task are met.

@@ -99,3 +99,15 @@ class AuthAPITests(APITestCase):
     def test_user_me_unauthenticated(self):
         response = self.client.get(self.me_url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class SwaggerDocsAPITests(APITestCase):
+    def test_schema_endpoint_returns_200(self):
+        url = reverse("schema")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_swagger_ui_endpoint_returns_200(self):
+        url = reverse("swagger-ui")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
