@@ -33,7 +33,7 @@ services:
     build: .
     container_name: events_web
     restart: always
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
