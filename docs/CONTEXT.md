@@ -2,7 +2,7 @@
 
 ## Agent Rules & Development Workflow
 - **Code Quality & Philosophy**: Code must be light, elegant, and modular ("всё по полочкам"). Scalability in mind. Zero bloat & zero speculation. Minimalist English comments.
-- **Verification & Testing**: Run `task pre-commit` (or `task ruff` and `task test`) before committing. Ensure 0 errors.
+- **Verification & Testing**: Run `just pre-commit` (or `just ruff` and `just test`) before committing. Ensure 0 errors.
 - **Git Rules**: Local commits only. Stage only specific files. Do NOT push.
 - **Closure**: Execute `/closetask` protocol on request.
 
@@ -13,7 +13,7 @@
 - **Background Tasks**: Celery + Redis (for email sending)
 - **Documentation**: OpenAPI 3 + Swagger (drf-spectacular)
 - **Infrastructure**: Docker & Docker Compose
-- **Tooling**: Python `uv`/`poetry`, `ruff`, `pytest`, `Taskfile`
+- **Tooling**: Python `poetry`, `ruff`, `pytest`, `justfile`
 
 ## Project Description
 A REST API backend for event management (conferences, meetups). 
