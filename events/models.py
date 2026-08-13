@@ -27,3 +27,33 @@ class Event(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.date.strftime('%Y-%m-%d %H:%M')})"
+
+
+class Registration(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="registrations",
+        verbose_name=_("user"),
+    )
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name="registrations",
+        verbose_name=_("event"),
+    )
+    registered_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("registration")
+        verbose_name_plural = _("registrations")
+        ordering = ["-registered_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "event"],
+                name="unique_user_event_registration",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user.email} -> {self.event.title}"

@@ -24,10 +24,10 @@ This document outlines the step-by-step implementation plan.
 - [x] Implement organizer permissions (only organizer can edit/delete).
 - [x] Tests for event CRUD and permissions.
 
-## ⚪ Phase 3: Registrations
-- [ ] Implement `Registration` model with unique constraint.
-- [ ] Build join/leave API endpoints.
-- [ ] Tests for registration logic (prevent double join).
+## 🟢 Phase 3: Registrations (Completed)
+- [x] Implement `Registration` model with unique constraint.
+- [x] Build join/leave API endpoints.
+- [x] Tests for registration logic (prevent double join).
 
 ## ⚪ Phase 4: Search & Filtering
 - [ ] Configure `django-filter`.

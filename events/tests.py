@@ -4,7 +4,7 @@ from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from .models import Event
+from .models import Event, Registration
 
 User = get_user_model()
 
@@ -94,3 +94,54 @@ class EventAPITests(APITestCase):
         response = self.client.delete(self.detail_url)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertTrue(Event.objects.filter(pk=self.event.pk).exists())
+
+
+class RegistrationAPITests(APITestCase):
+    def setUp(self):
+        self.organizer = User.objects.create_user(
+            email="organizer@example.com", password="password123"
+        )
+        self.participant = User.objects.create_user(
+            email="participant@example.com", password="password123"
+        )
+        self.event = Event.objects.create(
+            title="Python Meetup",
+            description="Django REST Framework deep dive",
+            date=timezone.now() + timezone.timedelta(days=3),
+            location="Kharkiv, Ukraine",
+            organizer=self.organizer,
+        )
+        self.register_url = reverse("event-register", kwargs={"pk": self.event.pk})
+
+    def test_register_for_event_success(self):
+        self.client.force_authenticate(user=self.participant)
+        response = self.client.post(self.register_url)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(
+            Registration.objects.filter(user=self.participant, event=self.event).exists()
+        )
+
+    def test_register_for_event_duplicate_fails(self):
+        self.client.force_authenticate(user=self.participant)
+        self.client.post(self.register_url)
+        response = self.client.post(self.register_url)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("already registered", response.data["detail"].lower())
+
+    def test_cancel_registration_success(self):
+        self.client.force_authenticate(user=self.participant)
+        self.client.post(self.register_url)
+        response = self.client.delete(self.register_url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(
+            Registration.objects.filter(user=self.participant, event=self.event).exists()
+        )
+
+    def test_cancel_registration_not_registered_fails(self):
+        self.client.force_authenticate(user=self.participant)
+        response = self.client.delete(self.register_url)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_register_unauthenticated_fails(self):
+        response = self.client.post(self.register_url)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
