@@ -17,12 +17,12 @@ This document outlines the step-by-step implementation plan.
 - [x] Build `/auth/register/` and `/auth/login/` endpoints.
 - [x] Tests for auth.
 
-## ⚪ Phase 2: Events Core
-- [ ] Create `events` app.
-- [ ] Implement `Event` model.
-- [ ] Build CRUD API endpoints for events.
-- [ ] Implement organizer permissions (only organizer can edit/delete).
-- [ ] Tests for event CRUD and permissions.
+## 🟢 Phase 2: Events Core (Completed)
+- [x] Create `events` app.
+- [x] Implement `Event` model.
+- [x] Build CRUD API endpoints for events.
+- [x] Implement organizer permissions (only organizer can edit/delete).
+- [x] Tests for event CRUD and permissions.
 
 ## ⚪ Phase 3: Registrations
 - [ ] Implement `Registration` model with unique constraint.

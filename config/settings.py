@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     # Local apps
     "users",
+    "events",
 ]
 
 AUTH_USER_MODEL = "users.User"
