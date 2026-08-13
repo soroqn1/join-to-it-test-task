@@ -29,11 +29,11 @@ This document outlines the step-by-step implementation plan.
 - [x] Build join/leave API endpoints.
 - [x] Tests for registration logic (prevent double join).
 
-## ⚪ Phase 4: Search & Filtering
-- [ ] Configure `django-filter`.
-- [ ] Add filters to event list (date, location, organizer).
-- [ ] Add search by title/description.
-- [ ] Tests for filtering.
+## 🟢 Phase 4: Search & Filtering (Completed)
+- [x] Configure `django-filter`.
+- [x] Add filters to event list (date, location, organizer).
+- [x] Add search by title/description.
+- [x] Tests for filtering.
 
 ## ⚪ Phase 5: Background Tasks (Celery)
 - [ ] Configure Celery in Django.

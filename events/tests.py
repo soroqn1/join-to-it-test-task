@@ -145,3 +145,57 @@ class RegistrationAPITests(APITestCase):
     def test_register_unauthenticated_fails(self):
         response = self.client.post(self.register_url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class EventFilterSearchAPITests(APITestCase):
+    def setUp(self):
+        self.user1 = User.objects.create_user(email="user1@example.com", password="password123")
+        self.user2 = User.objects.create_user(email="user2@example.com", password="password123")
+        self.list_url = reverse("event-list-create")
+
+        self.now = timezone.now()
+
+        self.event1 = Event.objects.create(
+            title="Django World Conference",
+            description="All about Python and Django REST framework",
+            date=self.now + timezone.timedelta(days=1),
+            location="Kyiv",
+            organizer=self.user1,
+        )
+
+        self.event2 = Event.objects.create(
+            title="React Frontend Meetup",
+            description="Modern web application architecture",
+            date=self.now + timezone.timedelta(days=10),
+            location="Lviv",
+            organizer=self.user2,
+        )
+
+    def test_filter_by_location(self):
+        self.client.force_authenticate(user=self.user1)
+        response = self.client.get(self.list_url, {"location": "Kyiv"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["id"], self.event1.id)
+
+    def test_filter_by_organizer(self):
+        self.client.force_authenticate(user=self.user1)
+        response = self.client.get(self.list_url, {"organizer": self.user2.id})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["id"], self.event2.id)
+
+    def test_search_by_keyword(self):
+        self.client.force_authenticate(user=self.user1)
+        response = self.client.get(self.list_url, {"search": "Django"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["id"], self.event1.id)
+
+    def test_filter_by_date_range(self):
+        self.client.force_authenticate(user=self.user1)
+        date_from = (self.now + timezone.timedelta(days=5)).isoformat()
+        response = self.client.get(self.list_url, {"date_from": date_from})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["id"], self.event2.id)

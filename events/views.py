@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema
-from rest_framework import generics, permissions, status
+from rest_framework import filters, generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .filters import EventFilter
 from .models import Event, Registration
 from .permissions import IsOrganizerOrReadOnly
 from .serializers import EventSerializer, RegistrationSerializer
@@ -17,6 +19,15 @@ class EventListCreateView(generics.ListCreateAPIView):
     queryset = Event.objects.select_related("organizer").all()
     serializer_class = EventSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    filterset_class = EventFilter
+    search_fields = ["title", "description"]
+    ordering_fields = ["date", "created_at"]
+    ordering = ["-date"]
 
     def perform_create(self, serializer):
         serializer.save(organizer=self.request.user)
