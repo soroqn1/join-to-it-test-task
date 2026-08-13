@@ -35,12 +35,12 @@ This document outlines the step-by-step implementation plan.
 - [x] Add search by title/description.
 - [x] Tests for filtering.
 
-## ⚪ Phase 5: Background Tasks (Celery)
-- [ ] Configure Celery in Django.
-- [ ] Create email sending task.
-- [ ] Trigger task on successful event registration.
-- [ ] Add Celery worker to `docker-compose.yml`.
-- [ ] Tests for task dispatching.
+## 🟢 Phase 5: Background Tasks (Celery) (Completed)
+- [x] Configure Celery in Django.
+- [x] Create email sending task.
+- [x] Trigger task on successful event registration.
+- [x] Add Celery worker to `docker-compose.yml`.
+- [x] Tests for task dispatching.
 
 ## ⚪ Phase 6: API Documentation
 - [ ] Install and configure `drf-spectacular`.

@@ -9,6 +9,7 @@ from .filters import EventFilter
 from .models import Event, Registration
 from .permissions import IsOrganizerOrReadOnly
 from .serializers import EventSerializer, RegistrationSerializer
+from .tasks import send_registration_email
 
 
 @extend_schema(
@@ -63,6 +64,13 @@ class EventRegisterView(APIView):
                 {"detail": "You are already registered for this event."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+        send_registration_email.delay(
+            user_email=request.user.email,
+            event_title=event.title,
+            event_date=str(event.date),
+            location=event.location,
+        )
 
         serializer = RegistrationSerializer(registration)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

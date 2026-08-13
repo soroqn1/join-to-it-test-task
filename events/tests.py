@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
@@ -113,13 +115,28 @@ class RegistrationAPITests(APITestCase):
         )
         self.register_url = reverse("event-register", kwargs={"pk": self.event.pk})
 
-    def test_register_for_event_success(self):
+    @patch("events.views.send_registration_email.delay")
+    def test_register_for_event_success(self, mock_email_task):
         self.client.force_authenticate(user=self.participant)
         response = self.client.post(self.register_url)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(
             Registration.objects.filter(user=self.participant, event=self.event).exists()
         )
+        mock_email_task.assert_called_once_with(
+            user_email=self.participant.email,
+            event_title=self.event.title,
+            event_date=str(self.event.date),
+            location=self.event.location,
+        )
+
+    @patch("events.tasks.send_mail")
+    def test_send_registration_email_task(self, mock_send_mail):
+        from .tasks import send_registration_email
+
+        send_registration_email("user@example.com", "Test Event", "2026-09-01", "Kyiv")
+        mock_send_mail.assert_called_once()
+        self.assertEqual(mock_send_mail.call_args[0][3], ["user@example.com"])
 
     def test_register_for_event_duplicate_fails(self):
         self.client.force_authenticate(user=self.participant)
